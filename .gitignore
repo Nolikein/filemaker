@@ -1,0 +1,11 @@
+# Package manager
+vendor
+
+# Editor
+.vscode
+
+# Phpunit
+.phpunit.result.cache
+
+# Maybe future feature
+docker

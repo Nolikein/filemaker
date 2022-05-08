@@ -1,0 +1,26 @@
+{
+    "name": "nolikein/filemaker",
+    "description": "Create files programmativally (as php)",
+    "type": "librairy",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Nolikein\\Filemaker\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nolikein"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    }
+}
