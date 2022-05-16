@@ -10,9 +10,9 @@ interface ContentInterface
      * 
      * @param string $content The content to use
      * 
-     * @return PhpFileMaker
+     * @return static
      */
-    public static function createFromContent(string $existingContent);
+    public static function createFromContent(string $existingContent): static;
 
     /**
      * Get the content of the file.

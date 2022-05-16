@@ -27,9 +27,9 @@ abstract class FileMaker implements ContentInterface, NewlineInterface, Tabulati
     /**
      * @inheritDoc
      */
-    public static function createFromContent(string $existingContent)
+    public static function createFromContent(string $existingContent): static
     {
-        $myself = new self();
+        $myself = new static();
         $myself->content = $existingContent;
         return $myself;
     }
@@ -50,6 +50,14 @@ abstract class FileMaker implements ContentInterface, NewlineInterface, Tabulati
     {
         $this->content .= $content;
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNewlineCharacter(): string
+    {
+        return $this->newline;
     }
 
     /**
@@ -79,6 +87,24 @@ abstract class FileMaker implements ContentInterface, NewlineInterface, Tabulati
     public function newline(): static
     {
         $this->content .= $this->newline;
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function incrementTabulationCounter(): static
+    {
+        $this->tabCount++;
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function decrementTabulationCounter(): static
+    {
+        $this->tabCount--;
         return $this;
     }
 

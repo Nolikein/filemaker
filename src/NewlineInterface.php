@@ -5,11 +5,20 @@ namespace Nolikein\FileMaker;
 interface NewlineInterface
 {
     /**
+     * Return the current newline character.
+     * 
+     * @return string
+     */
+    public function getNewlineCharacter(): string;
+
+    /**
      * Set the newline character.
      * 
      * @param string $newline The newline character to use
      * 
      * @return static
+     * 
+     * @throws InvalidArgumentException Invalid newline character
      */
     public function setNewlineCharacter(string $newline): static;
 

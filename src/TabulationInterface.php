@@ -5,7 +5,21 @@ namespace Nolikein\FileMaker;
 interface TabulationInterface
 {
     /**
-     * Add the current tabulation level.
+     * Increment the tabulation counter.
+     * 
+     * @return static
+     */
+    public function incrementTabulationCounter(): static;
+
+    /**
+     * Decrement the tabulation counter.
+     * 
+     * @return static
+     */
+    public function decrementTabulationCounter(): static;
+
+    /**
+     * Add the current tabulation level to the current content.
      * 
      * @return static
      */
