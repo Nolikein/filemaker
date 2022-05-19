@@ -8,7 +8,7 @@ namespace Nolikein\FileMaker\Enums;
 class PhpTypes implements FakeEnumInterface
 {
     const ACCEPTED_TYPES = [
-        'int',
+        'integer',
         'float',
         'string',
         'bool',

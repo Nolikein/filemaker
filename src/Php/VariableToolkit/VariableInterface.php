@@ -38,6 +38,7 @@ interface VariableInterface
      * @return self
      * 
      * @throws \InvalidArgumentException If the argument types are not valid
+     * @throws \InvalidArgumentException If the argument type is already set
      */
     public function addType(string $type): self;
 
@@ -49,6 +50,13 @@ interface VariableInterface
      * @return self
      */
     public function setTypes(array $types): self;
+
+    /**
+     * Checks if the variable has any type.
+     * 
+     * @return bool
+     */
+    public function hasType(): bool;
 
     /**
      * Get the property default value.

@@ -59,7 +59,7 @@ trait UsePhpBasics
             $this->addContent(implode('|', $argument->getTypes()) . ' ' . ($argument->isReference() ? '&$' : '$') . $argument->getName());
             // Add the default value if it exists
             if ($argument->hasDefaultValue()) {
-                $this->addContent(' = ' . $argument->getDefaultValue());
+                $this->addContent(' = ' . var_export($argument->getDefaultValue(), true));
             }
             // Add a comma at the end of the argument (even if its not the last one)
             $this->addContent(', ');
@@ -71,13 +71,13 @@ trait UsePhpBasics
         $this->addContent(')');
         // Add the return type if it exists
         if ($function->hasReturnType()) {
-            $this->addContent(' : ' . ($function->getReturnType()->isNullable() ? '?' : '') . $function->getReturnType()->getType());
+            $this->addContent(': ' . ($function->getReturnType()->isNullable() ? '?' : '') . $function->getReturnType()->getType());
         }
         $this->newline();
 
         // Add the function content
         $this->addBracketSection(function ($maker) use ($function) {
-            if($function->hasActions()) {
+            if ($function->hasActions()) {
                 $function->getActions()($maker);
             } else {
                 $maker->addLine('# Add your code here');

@@ -39,8 +39,13 @@ class Argument extends Variable implements ArgumentInterface
     public function setIsNullable(bool $isNullable): self
     {
         // If the types variable has more than one type, the argument cannot be nullable
-        if ($isNullable && count($this->types) > 1) {
-            throw new \InvalidArgumentException('Argument "' . $this->name . '" cannot be nullable if it has more than one type');
+        if ($isNullable) {
+            if (empty($this->types)) {
+                throw new \InvalidArgumentException('Argument "' . $this->name . '" cannot be nullable if it has no type');
+            }
+            if (count($this->types) > 1) {
+                throw new \InvalidArgumentException('Argument "' . $this->name . '" cannot be nullable if it has more than one type');
+            }
         }
         $this->isNullable = $isNullable;
         return $this;

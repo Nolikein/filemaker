@@ -12,7 +12,7 @@ class Property extends Variable implements PropertyInterface
      */
     public function __construct(
         string $name,
-        array|string $types,
+        array|string $types = [],
         mixed $defaultValue = null,
         protected string $visibility = 'public'
     ) {

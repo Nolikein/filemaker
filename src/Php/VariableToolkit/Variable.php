@@ -3,21 +3,27 @@
 namespace Nolikein\FileMaker\Php\VariableToolkit;
 
 use Nolikein\FileMaker\Enums\PhpTypes;
+use RuntimeException;
 
 class Variable implements VariableInterface
 {
     /** @var array $types The property types */
     protected array $types = [];
 
+    /** @var bool $hasDefaultValue Tells if the current variable has a setted default value */
+    protected $hasDefaultValue = false;
+
     /**
      * @param string $name The name of the property
      * @param array<string>|string $types The property types
      * @param mixed $defaultValue The default value of the property
+     * @param bool $defaultValueIsNull Allow a null default value to be defined
      */
     public function __construct(
         protected string $name,
-        array|string $types,
-        protected mixed $defaultValue,
+        array|string $types = [],
+        protected mixed $defaultValue = null,
+        bool $defaultValueIsNull = false
     ) {
         $this->setName($name);
         if (is_array($types)) {
@@ -25,7 +31,9 @@ class Variable implements VariableInterface
         } else {
             $this->setTypes([$types]);
         }
-        $this->setDefaultValue($defaultValue);
+        if ($defaultValue !== null || $defaultValueIsNull) {
+            $this->setDefaultValue($defaultValue);
+        }
     }
 
     /**
@@ -68,6 +76,9 @@ class Variable implements VariableInterface
         if (!PhpTypes::exists($type)) {
             throw new \InvalidArgumentException('The type "' . $type . '" is not valid');
         }
+        if (in_array($type, $this->types)) {
+            throw new \InvalidArgumentException('The type "' . $type . '" has been already set');
+        }
         $this->types[] = $type;
         return $this;
     }
@@ -83,6 +94,11 @@ class Variable implements VariableInterface
         return $this;
     }
 
+    public function hasType(): bool
+    {
+        return !empty($this->types);
+    }
+
     /**
      * @inheritDoc
      */
@@ -96,14 +112,21 @@ class Variable implements VariableInterface
      */
     public function setDefaultValue($defaultValue): self
     {
-        // Prevent the default value from being null
-        if (!is_null($defaultValue)) {
-            // Remove quotes when string
-            if (is_string($defaultValue)) {
-                $defaultValue = trim($defaultValue, '"\'');
+        // Check if the type is valid
+        if ($this->hasType() && $defaultValue !== null) {
+            $isWellTyped = false;
+            foreach ($this->getTypes() as $type) {
+                if ($type === gettype($defaultValue)) {
+                    $isWellTyped = true;
+                }
             }
-            $this->defaultValue = var_export($defaultValue, true);
+            if (!$isWellTyped) {
+                throw new RuntimeException('The default value of the ' . $this->name . ' variable must be of any of these types : ' . implode(', ', $this->types) . '. Got ' . gettype($defaultValue));
+            }
         }
+
+        $this->defaultValue = $defaultValue;
+        $this->hasDefaultValue = true;
         return $this;
     }
 
@@ -112,6 +135,6 @@ class Variable implements VariableInterface
      */
     public function hasDefaultValue(): bool
     {
-        return !is_null($this->defaultValue);
+        return $this->hasDefaultValue;
     }
 }
