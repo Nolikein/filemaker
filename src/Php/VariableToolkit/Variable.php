@@ -121,7 +121,7 @@ class Variable implements VariableInterface
                 }
             }
             if (!$isWellTyped) {
-                throw new RuntimeException('The default value of the ' . $this->name . ' variable must be of any of these types : ' . implode(', ', $this->types) . '. Got ' . gettype($defaultValue));
+                throw new \InvalidArgumentException('The default value of the ' . $this->name . ' variable must be of any of these types : ' . implode(', ', $this->types) . '. Got ' . gettype($defaultValue));
             }
         }
 

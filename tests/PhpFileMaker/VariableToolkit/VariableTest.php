@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\PhpFileMaker\VariableToolkit;
 
+use InvalidArgumentException;
 use Nolikein\FileMaker\Enums\Newline;
 use Nolikein\FileMaker\Php\PhpFileMaker;
 use Nolikein\FileMaker\Php\VariableToolkit\Variable;
@@ -54,5 +55,33 @@ final class VariableTest extends TestCase
         $this->assertFalse($var->hasDefaultValue());
         $var = new Variable('maVar', [], null, true);
         $this->assertTrue($var->hasDefaultValue());
+    }
+
+    public function test_name_must_be_valid()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid name "05my');
+        new Variable('05my');
+    }
+    
+    public function test_type_must_be_valid()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The type "doesNotExists" is not valid');
+        new Variable('maVar', ['doesNotExists']);
+    }
+
+    public function test_type_cannot_be_setted_two_times()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The type "integer" has been already set');
+        new Variable('maVar', ['integer', 'integer']);
+    }
+
+    public function test_defaumt_value_must_has_the_same_type_that_defined()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The default value of the maVar variable must be of any of these types : integer. Got string');
+        new Variable('maVar', ['integer'], 'Hello');
     }
 }
