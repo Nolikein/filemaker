@@ -65,7 +65,7 @@ final class PhpBasicsTest extends TestCase
                 }
             ));
         $this->assertEquals(
-            "function test1(string|integer &\$test2 = 123): ?string" . Newline::LF
+            "function test1(string|int &\$test2 = 123): ?string" . Newline::LF
                 . "{" . Newline::LF
                 . "\tHello" . Newline::LF
                 . "}" . Newline::LF,
@@ -139,5 +139,37 @@ final class PhpBasicsTest extends TestCase
                     $maker->addLine('Hello');
                 }
             ));
+    }
+
+    public function test_that_arg_type_equivalent_are_converted()
+    {
+        foreach ([
+            ['handle' => ['boolean', 'bool'], 'result' => 'bool'],
+            ['handle' => ['integer', 'int'], 'result' => 'int'],
+        ] as $test) {
+            foreach ($test['handle'] as $type) {
+                $maker = PhpFileMaker::createFromContent('');
+                $maker
+                    ->setNewlineCharacter(Newline::LF)
+                    ->addFunction(new FunctionPattern(
+                        'test1',
+                        [
+                            new Argument('test2', $type)
+                        ],
+                        new ReturnType('string', isNullable: true),
+                        function (PhpFileMaker $maker) {
+                            $maker->addLine('Hello');
+                        }
+                    ));
+                $this->assertEquals(
+                    "function test1(" . $test['result'] . " \$test2): ?string" . Newline::LF
+                        . "{" . Newline::LF
+                        . "\tHello" . Newline::LF
+                        . "}" . Newline::LF,
+
+                    $maker->getContent()
+                );
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Nolikein\FileMaker\Php\FunctionToolkit;
 
+use Nolikein\FileMaker\Enums\PhpTypes;
 use Nolikein\FileMaker\Php\VariableToolkit\Variable;
 
 class Argument extends Variable implements ArgumentInterface
@@ -23,6 +24,24 @@ class Argument extends Variable implements ArgumentInterface
         parent::__construct($name, $types, $defaultValue);
         $this->setIsNullable($isNullable);
         $this->setIsReference($isReference);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addType(string $type): self
+    {
+        if (!PhpTypes::exists($type)) {
+            throw new \InvalidArgumentException('The type "' . $type . '" is not valid');
+        }
+        if (in_array($type, $this->types)) {
+            throw new \InvalidArgumentException('The type "' . $type . '" has been already set');
+        }
+        if (!PhpTypes::isValidAsArgument($type)) {
+            $type = PhpTypes::getArgumentEquivalent($type);
+        }
+        $this->types[] = $type;
+        return $this;
     }
 
     /**

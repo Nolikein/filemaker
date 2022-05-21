@@ -116,6 +116,9 @@ class Variable implements VariableInterface
         if ($this->hasType() && $defaultValue !== null) {
             $isWellTyped = false;
             foreach ($this->getTypes() as $type) {
+                if (!PhpTypes::isValidForTypeChecking($type)) {
+                    $type = PhpTypes::getTypeCheckingEquivalent($type);
+                }
                 if ($type === gettype($defaultValue)) {
                     $isWellTyped = true;
                 }

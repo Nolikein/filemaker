@@ -5,7 +5,7 @@ namespace Nolikein\FileMaker\Php\FunctionToolkit;
 /**
  * Define a method into a PHP file.
  */
-class MethodPattern extends FunctionPattern implements FunctionPatternInterface
+class MethodPattern extends FunctionPattern implements MethodPatternInterface
 {
     /**
      * @param string $name The function name
@@ -25,9 +25,7 @@ class MethodPattern extends FunctionPattern implements FunctionPatternInterface
     }
 
     /**
-     * Get the function visibility.
-     * 
-     * @return string
+     * @inheritDoc
      */
     public function getVisibility(): string
     {
@@ -35,13 +33,7 @@ class MethodPattern extends FunctionPattern implements FunctionPatternInterface
     }
 
     /**
-     * Set the function visibility.
-     * 
-     * @param string $visibility The function visibility
-     * 
-     * @return self
-     * 
-     * @throws \InvalidArgumentException If the function visibility is not valid
+     * @inheritDoc
      */
     public function setVisibility(string $visibility): self
     {
@@ -51,5 +43,4 @@ class MethodPattern extends FunctionPattern implements FunctionPatternInterface
         $this->visibility = $visibility;
         return $this;
     }
-
 }
