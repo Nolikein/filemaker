@@ -4,6 +4,7 @@ namespace Nolikein\FileMaker\Php\VariableToolkit;
 
 class Property extends Variable implements PropertyInterface
 {
+    const VISIBILITIES = ['public', 'protected', 'private'];
     /**
      * @param string $name The name of the property
      * @param array<string>|string $types The property types
@@ -33,8 +34,8 @@ class Property extends Variable implements PropertyInterface
      */
     public function setVisibility(string $visibility): self
     {
-        if (!in_array($visibility, ['public', 'protected', 'private'])) {
-            throw new \InvalidArgumentException('Invalid visibility');
+        if (!in_array($visibility, self::VISIBILITIES)) {
+            throw new \InvalidArgumentException('The property "' . $this->name . '" has an invalid visibility. Got "' . $visibility . '" but only can select ' . implode(', ', self::VISIBILITIES) . '.');
         }
         $this->visibility = $visibility;
         return $this;

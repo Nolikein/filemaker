@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Tests\PhpFileMaker\VariableToolkit;
 
 use InvalidArgumentException;
-use Nolikein\FileMaker\Enums\Newline;
-use Nolikein\FileMaker\Php\PhpFileMaker;
 use Nolikein\FileMaker\Php\VariableToolkit\Variable;
 use PHPUnit\Framework\TestCase;
 
