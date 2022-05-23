@@ -37,8 +37,8 @@ class MethodPattern extends FunctionPattern implements MethodPatternInterface
      */
     public function setVisibility(string $visibility): self
     {
-        if(!in_array($visibility, ['public', 'protected', 'private'])) {
-            throw new \InvalidArgumentException('Invalid visibility');
+        if (!in_array($visibility, ['public', 'protected', 'private'])) {
+            throw new \InvalidArgumentException('Invalid visibility "' . $visibility . '".');
         }
         $this->visibility = $visibility;
         return $this;
