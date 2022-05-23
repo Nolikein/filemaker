@@ -23,7 +23,7 @@ interface FunctionPatternInterface
      * 
      * @return ReturnType
      */
-    public function getReturnType(): ReturnType;
+    public function getReturnType(): ?ReturnType;
 
     /**
      * Get the actions to do inside the function. The actions are executed
@@ -31,7 +31,7 @@ interface FunctionPatternInterface
      * 
      * @return callable
      */
-    public function getActions(): callable;
+    public function getActions(): ?callable;
 
     /**
      * Set the function name.

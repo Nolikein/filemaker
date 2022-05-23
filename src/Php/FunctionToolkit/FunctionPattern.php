@@ -15,14 +15,18 @@ class FunctionPattern implements FunctionPatternInterface
      */
     public function __construct(
         protected string $name,
-        protected array $arguments,
-        protected ReturnType $returnType,
-        protected \Closure $actions
+        protected array $arguments = [],
+        protected ReturnType|null $returnType = null,
+        protected \Closure|null $actions = null
     ) {
         $this->setName($name);
         $this->setArguments($arguments);
-        $this->setReturnType($returnType);
-        $this->setActions($actions);
+        if ($returnType !== null) {
+            $this->setReturnType($returnType);
+        }
+        if ($actions !== null) {
+            $this->setActions($actions);
+        }
     }
 
     /**
@@ -44,7 +48,7 @@ class FunctionPattern implements FunctionPatternInterface
     /**
      * @inheritDoc
      */
-    public function getReturnType(): ReturnType
+    public function getReturnType(): ?ReturnType
     {
         return $this->returnType;
     }
@@ -52,7 +56,7 @@ class FunctionPattern implements FunctionPatternInterface
     /**
      * @inheritDoc
      */
-    public function getActions(): callable
+    public function getActions(): ?callable
     {
         return $this->actions;
     }
@@ -74,7 +78,7 @@ class FunctionPattern implements FunctionPatternInterface
      */
     public function addArgument(Argument $argument): self
     {
-        if(empty($this->arguments)) {
+        if (empty($this->arguments)) {
             $this->arguments[] = $argument;
         } else {
             // Check the argument name is not already used

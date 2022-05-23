@@ -15,9 +15,9 @@ class MethodPattern extends FunctionPattern implements MethodPatternInterface
      */
     public function __construct(
         string $name,
-        array $arguments,
-        ReturnType $returnType,
-        \Closure $actions,
+        array $arguments = [],
+        ReturnType|null $returnType = null,
+        \Closure|null $actions = null,
         protected string $visibility = 'public'
     ) {
         parent::__construct($name, $arguments, $returnType, $actions);
