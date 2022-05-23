@@ -18,7 +18,7 @@ final class PropertyTest extends TestCase
         $this->assertInstanceOf(Property::class, $var);
         $this->assertFalse($var->hasDefaultValue());
 
-        $var = new Property('maVar', 'string', 'Hello world', 'private');
+        $var = new Property('maVar', 'string', 'Hello world', false, 'private');
         $var = new Property('maVar', visibility: 'private');
     }
 

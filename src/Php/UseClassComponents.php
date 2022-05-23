@@ -30,7 +30,7 @@ trait UseClassComponents
 
     public function addProperty(Property $property): static
     {
-        $this->addInstruction($property->getVisibility() . ' ' . implode('|', $property->getTypes()) . ' $' . $property->getName() . ($property->hasDefaultValue() ? ' = ' . $property->getDefaultValue() : ''));
+        $this->addInstruction($property->getVisibility() . ' ' . implode('|', $property->getTypes()) . ' $' . $property->getName() . ($property->hasDefaultValue() ? ' = ' . var_export($property->getDefaultValue(), true) : ''));
         return $this;
     }
 
@@ -47,7 +47,7 @@ trait UseClassComponents
             $this->addContent(implode('|', $argument->getTypes()) . ' ' . ($argument->isReference() ? '&$' : '$') . $argument->getName());
             // Add the default value if it exists
             if ($argument->hasDefaultValue()) {
-                $this->addContent(' = ' . $argument->getDefaultValue());
+                $this->addContent(' = ' . var_export($argument->getDefaultValue(), true));
             }
             // Add a comma at the end of the argument (even if its not the last one)
             $this->addContent(', ');
@@ -59,7 +59,7 @@ trait UseClassComponents
         $this->addContent(')');
         // Add the return type if it exists
         if ($method->hasReturnType()) {
-            $this->addContent(' : ' . ($method->getReturnType()->isNullable() ? '?' : '') . $method->getReturnType()->getType());
+            $this->addContent(': ' . ($method->getReturnType()->isNullable() ? '?' : '') . $method->getReturnType()->getType());
         }
         $this->newline();
 

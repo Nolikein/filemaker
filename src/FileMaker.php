@@ -27,9 +27,9 @@ abstract class FileMaker implements ContentInterface, NewlineInterface, Tabulati
     /**
      * @inheritDoc
      */
-    public static function createFromContent(string $existingContent): static
+    public static function createFromContent(string $existingContent, string $newline = Newline::LF): static
     {
-        $myself = new static();
+        $myself = new static($newline);
         $myself->content = $existingContent;
         return $myself;
     }

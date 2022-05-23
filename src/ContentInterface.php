@@ -12,7 +12,7 @@ interface ContentInterface
      * 
      * @return static
      */
-    public static function createFromContent(string $existingContent): static;
+    public static function createFromContent(string $existingContent, string $newline = Newline::LF): static;
 
     /**
      * Get the content of the file.

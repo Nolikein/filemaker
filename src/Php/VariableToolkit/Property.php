@@ -15,9 +15,10 @@ class Property extends Variable implements PropertyInterface
         string $name,
         array|string $types = [],
         mixed $defaultValue = null,
+        bool $defaultValueIsNull = false,
         protected string $visibility = 'public'
     ) {
-        parent::__construct($name, $types, $defaultValue);
+        parent::__construct($name, $types, $defaultValue, $defaultValueIsNull);
         $this->setVisibility($visibility);
     }
 
