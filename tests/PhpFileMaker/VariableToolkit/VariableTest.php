@@ -72,14 +72,14 @@ final class VariableTest extends TestCase
     public function test_type_cannot_be_setted_two_times()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The type "integer" has been already set');
+        $this->expectExceptionMessage('The type "int" has been already set');
         new Variable('maVar', ['integer', 'integer']);
     }
 
-    public function test_defaumt_value_must_has_the_same_type_that_defined()
+    public function test_default_value_must_has_the_same_type_that_defined()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The default value of the maVar variable must be of any of these types : integer. Got string');
+        $this->expectExceptionMessage('The default value of the maVar variable must be of any of these types : int. Got string');
         new Variable('maVar', ['integer'], 'Hello');
     }
 }

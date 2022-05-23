@@ -9,7 +9,7 @@ use InvalidArgumentException;
  */
 class PhpTypes implements FakeEnumInterface
 {
-    const ACCEPTED_TYPES = [
+    const TYPE_ACCEPTED_NAME = [
         'integer',
         'int',
         'float',
@@ -24,14 +24,14 @@ class PhpTypes implements FakeEnumInterface
         'null'
     ];
 
-    const GETTYPE_CONVERSION = [
-        'int' => 'integer',
-        'bool' => 'boolean'
-    ];
-
-    const ARGUMENT_CONVERSION = [
+    const TYPE_ALIAS = [
         'integer' => 'int',
         'boolean' => 'bool'
+    ];
+
+    const GETTYPE_ALIAS = [
+        'int' => 'integer',
+        'bool' => 'boolean'
     ];
 
     /**
@@ -40,7 +40,7 @@ class PhpTypes implements FakeEnumInterface
      */
     public static function all()
     {
-        return self::ACCEPTED_TYPES;
+        return self::TYPE_ACCEPTED_NAME;
     }
 
     /**
@@ -51,7 +51,7 @@ class PhpTypes implements FakeEnumInterface
      */
     public static function exists(string $type)
     {
-        return in_array($type, self::ACCEPTED_TYPES);
+        return in_array($type, self::TYPE_ACCEPTED_NAME);
     }
 
     /**
@@ -61,9 +61,9 @@ class PhpTypes implements FakeEnumInterface
      * 
      * @return bool
      */
-    public static function isValidAsArgument(string $type): bool
+    public static function shouldBeRenamed(string $type): bool
     {
-        return !key_exists($type, self::ARGUMENT_CONVERSION);
+        return key_exists($type, self::TYPE_ALIAS);
     }
 
     /**
@@ -73,12 +73,12 @@ class PhpTypes implements FakeEnumInterface
      * 
      * @return string
      */
-    public static function getArgumentEquivalent(string $type): string
+    public static function rename(string $type): string
     {
-        if (self::isValidAsArgument($type)) {
+        if (!self::shouldBeRenamed($type)) {
             return $type;
         }
-        return self::ARGUMENT_CONVERSION[$type];
+        return self::TYPE_ALIAS[$type];
     }
 
     /**
@@ -90,7 +90,7 @@ class PhpTypes implements FakeEnumInterface
      */
     public static function isValidForTypeChecking(string $type): bool
     {
-        return !key_exists($type, self::GETTYPE_CONVERSION);
+        return !key_exists($type, self::GETTYPE_ALIAS);
     }
 
     /**
@@ -105,6 +105,6 @@ class PhpTypes implements FakeEnumInterface
         if (self::isValidForTypeChecking($type)) {
             return $type;
         }
-        return self::GETTYPE_CONVERSION[$type];
+        return self::GETTYPE_ALIAS[$type];
     }
 }

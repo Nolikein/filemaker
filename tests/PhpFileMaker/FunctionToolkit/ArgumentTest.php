@@ -11,7 +11,10 @@ final class ArgumentTest extends TestCase
 {
     public function test_can_instanciate_argument()
     {
-        // $arg = new Argument('try', ['integer','boolean']);
-        $this->assertTrue(true);
+        $arg = new Argument('try', ['integer','boolean']);
+        $this->assertInstanceOf(Argument::class, $arg);
+        
     }
+
+    // TODO: Check reference, check isNullable
 }

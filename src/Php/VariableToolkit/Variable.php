@@ -76,6 +76,9 @@ class Variable implements VariableInterface
         if (!PhpTypes::exists($type)) {
             throw new \InvalidArgumentException('The type "' . $type . '" is not valid');
         }
+        if (PhpTypes::shouldBeRenamed($type)) {
+            $type = PhpTypes::rename($type);
+        }
         if (in_array($type, $this->types)) {
             throw new \InvalidArgumentException('The type "' . $type . '" has been already set');
         }

@@ -29,24 +29,6 @@ class Argument extends Variable implements ArgumentInterface
     /**
      * @inheritDoc
      */
-    public function addType(string $type): self
-    {
-        if (!PhpTypes::exists($type)) {
-            throw new \InvalidArgumentException('The type "' . $type . '" is not valid');
-        }
-        if (in_array($type, $this->types)) {
-            throw new \InvalidArgumentException('The type "' . $type . '" has been already set');
-        }
-        if (!PhpTypes::isValidAsArgument($type)) {
-            $type = PhpTypes::getArgumentEquivalent($type);
-        }
-        $this->types[] = $type;
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function isNullable(): bool
     {
         return $this->isNullable;
