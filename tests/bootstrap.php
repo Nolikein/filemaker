@@ -10,6 +10,13 @@ function dd(): never
     die;
 }
 
+function dump(): void
+{
+    array_map(function ($x) {
+        var_dump($x);
+    }, func_get_args());
+}
+
 function test_cache_path(string $path = ''): string
 {
     return empty($path) ? __DIR__ . '/cache/' : __DIR__ . '/cache/' . ltrim($path, '/');
