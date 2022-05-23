@@ -16,7 +16,7 @@ class Argument extends Variable implements ArgumentInterface
      */
     public function __construct(
         string $name,
-        array|string $types,
+        array|string $types = [],
         mixed $defaultValue = null,
         private bool $isNullable = false,
         private bool $isReference = false
