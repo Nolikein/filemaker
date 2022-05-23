@@ -10,8 +10,10 @@ class ReturnType
      * @param string $type The type of the return type
      * @param bool $isNullable Is the return type nullable?
      */
-    public function __construct(private string $type, private bool $isNullable = false)
-    {
+    public function __construct(
+        private string $type,
+        private bool $isNullable = false
+    ) {
         $this->setType($type);
         $this->setIsNullable($isNullable);
     }
