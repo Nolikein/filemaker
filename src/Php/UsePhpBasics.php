@@ -33,9 +33,9 @@ trait UsePhpBasics
      * 
      * @return static
      */
-    public function addBracketSection(callable $actions, bool $useTabulation = true): static
+    public function addBracketSection(callable $actions, bool $avoidBeginningTabulation = true): static
     {
-        if ($useTabulation) {
+        if ($avoidBeginningTabulation) {
             $this->addLine('{');
         } else {
             $this->addContent('{')->newline();
