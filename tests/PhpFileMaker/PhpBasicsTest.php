@@ -34,16 +34,50 @@ final class PhpBasicsTest extends TestCase
         $this->assertEquals("echo 'Hello world';" . Newline::LF, $maker->getContent());
     }
 
-    public function test_can_add_bracket_section()
+    public function test_can_add_bracket_section_beginning_without_tab()
     {
         $maker = PhpFileMaker::createFromContent('', Newline::LF);
         $maker
+            ->addContent('test ')
             ->addBracketSection(function (PhpFileMaker $maker) {
                 $maker->addLine('Hello world');
             });
-        $this->assertEquals("{" . Newline::LF .
+        $this->assertEquals("test {" . Newline::LF .
             "\tHello world" . Newline::LF
             . "}" . Newline::LF, $maker->getContent());
+    }
+
+    public function test_can_add_bracket_section_beginning_with_tab_disabled()
+    {
+        $maker = PhpFileMaker::createFromContent('', Newline::LF);
+        $maker
+            ->addTabulationSection(function ($maker) {
+                $maker
+                    ->addContent('test ')
+                    ->addBracketSection(function (PhpFileMaker $maker) {
+                        $maker->addLine('Hello world');
+                    }, false);
+            });
+
+        $this->assertEquals("test {" . Newline::LF .
+            "\t\tHello world" . Newline::LF
+            . "\t}" . Newline::LF, $maker->getContent());
+    }
+
+    public function test_can_add_bracket_section_beginning_with_tab_enabled()
+    {
+        $maker = PhpFileMaker::createFromContent('', Newline::LF);
+        $maker
+            ->addTabulationSection(function ($maker) {
+                $maker
+                    ->addBracketSection(function (PhpFileMaker $maker) {
+                        $maker->addLine('Hello world');
+                    }, true);
+            });
+
+        $this->assertEquals("\t{" . Newline::LF .
+            "\t\tHello world" . Newline::LF
+            . "\t}" . Newline::LF, $maker->getContent());
     }
 
     public function test_can_add_function_not_nullable()

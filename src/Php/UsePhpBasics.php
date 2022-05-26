@@ -33,9 +33,14 @@ trait UsePhpBasics
      * 
      * @return static
      */
-    public function addBracketSection(callable $actions): static
+    public function addBracketSection(callable $actions, bool $useTabulation = true): static
     {
-        $this->addLine('{');
+        if ($useTabulation) {
+            $this->addLine('{');
+        } else {
+            $this->addContent('{')->newline();
+        }
+
         $this->addTabulationSection(function ($maker) use ($actions) {
             $actions($maker);
         });
