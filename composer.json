@@ -1,6 +1,6 @@
 {
     "name": "nolikein/filemaker",
-    "description": "Create files programmativally (as php)",
+    "description": "Create files programmatically (like php)",
     "type": "librairy",
     "minimum-stability": "dev",
     "license": "MIT",
