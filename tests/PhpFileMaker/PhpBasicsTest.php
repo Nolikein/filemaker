@@ -56,7 +56,7 @@ final class PhpBasicsTest extends TestCase
                     ->addContent('test ')
                     ->addBracketSection(function (PhpFileMaker $maker) {
                         $maker->addLine('Hello world');
-                    }, false);
+                    }, true);
             });
 
         $this->assertEquals("test {" . Newline::LF .
@@ -72,7 +72,7 @@ final class PhpBasicsTest extends TestCase
                 $maker
                     ->addBracketSection(function (PhpFileMaker $maker) {
                         $maker->addLine('Hello world');
-                    }, true);
+                    }, false);
             });
 
         $this->assertEquals("\t{" . Newline::LF .

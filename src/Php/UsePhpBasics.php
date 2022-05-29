@@ -33,12 +33,12 @@ trait UsePhpBasics
      * 
      * @return static
      */
-    public function addBracketSection(callable $actions, bool $avoidBeginningTabulation = true): static
+    public function addBracketSection(callable $actions, bool $avoidBeginningTabulation = false): static
     {
         if ($avoidBeginningTabulation) {
-            $this->addLine('{');
-        } else {
             $this->addContent('{')->newline();
+        } else {
+            $this->addLine('{');
         }
 
         $this->addTabulationSection(function ($maker) use ($actions) {
