@@ -1,4 +1,8 @@
 # FileMaker and PhpFileMaker
+![PHP Version](https://img.shields.io/badge/PHP-8.1-blue)
+![Packagist version](https://img.shields.io/packagist/v/Nolikein/filemaker)
+![Packagist License](https://img.shields.io/packagist/l/nolikein/filemaker)
+
 
 A project about to make php files from an abstract file maker by using the powerfull of poo.
 
@@ -11,6 +15,8 @@ Read the [installation chapter](https://github.com/Nolikein/filemaker/wiki/Insta
 Read the [documentation](https://github.com/Nolikein/filemaker/wiki) for that.
 
 ## Testing
+
+For the moment, the project does not implements a CI because i usually use gitlab CI and not github CI. The time to convert the current [gitlab-ci](https://github.com/Nolikein/filemaker/blob/master/.gitlab-ci.yml), the project will be checked by my own. The latest PHPUnit check and Gitlab personnal runner check was successfull.
 
 The tests use [Docker](https://www.docker.com) and its magical side for virtual process (called containers) from customisable images.
 
