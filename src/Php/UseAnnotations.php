@@ -10,28 +10,41 @@ trait UseAnnotations
     /**
      * @param array<string> $annotations The annotations to add
      */
-    public function addAnnotationBloc(array $annotations): static
+    public function addAnnotationBloc(string|array $annotations): static
     {
+        // Add the annotation header
         $this->addLine('/**');
         $lastAnnotationType = '';
+
+        // The next instruction will only support array. So we convert it to it
+        if (is_string($annotations)) {
+            $annotations = [$annotations];
+        }
+
+        // Add the annotation text
         for ($i = 0; $i < count($annotations); $i++) {
             if (!is_string($annotations[$i])) {
                 throw new InvalidArgumentException('You given an annotation bloc with other type than string.');
             }
             $currentAnnotation = trim($annotations[$i]);
 
-            // If the annotation has a specific type
-            if ($i > 0 && $this->annotationHasType($currentAnnotation)) {
-                // And if the annotation type is different from the old, jump a newline
-                if ($lastAnnotationType !== $this->getAnnotationType($currentAnnotation)) {
+            // If the annotation has a specific type...
+            if ($this->annotationHasType($currentAnnotation)) {
+                // And if the annotation is not the first element and the type is different from the previous, jump a newline
+                if ($i > 0 && $lastAnnotationType !== $this->getAnnotationType($currentAnnotation)) {
                     $this->addLine(' *');
                 }
-                // The current annot will be check as last annot at the next iteration
+                // Mean for the next iteration, the previous iteration had an annotation type
                 $lastAnnotationType = $this->getAnnotationType($currentAnnotation);
+            } else {
+                // Mean for the next iteration, the previous iteration had no type
+                $lastAnnotationType = '';
             }
 
+            // Add the line
             $this->addLine(' * ' . $currentAnnotation);
         }
+        // Add the annotation footer
         $this->addLine(' */');
         return $this;
     }
