@@ -38,4 +38,16 @@ final class NamespaceTest extends TestCase
             $maker->getContent()
         );
     }
+
+    public function test_use_statement_can_use_aliasing()
+    {
+        $maker = PhpFileMaker::createFromContent('');
+        $maker->setNewlineCharacter(Newline::LF)->addUseStatement([
+            'App' => 'Delta'
+        ]);
+        $this->assertEquals(
+            'use App as Delta;' . Newline::LF,
+            $maker->getContent()
+        );
+    }
 }

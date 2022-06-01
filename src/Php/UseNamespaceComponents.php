@@ -19,18 +19,27 @@ trait UseNamespaceComponents
     /**
      * Add a use statement.
      * 
-     * @param string|array $namespace The namespace to use
+     * @param string|array $namespace The namespace to use (array support aliasing)
+     * 
+     * @example string "App" give 'use App;'
+     * @example array "['App' => 'Delta']" give 'use App as Delta;'
      * 
      * @return static
      */
     public function addUseStatement(array|string $class): static
     {
-        if (is_array($class)) {
-            foreach ($class as $curClass) {
-                $this->addInstruction('use ' . $curClass);
+        // Conversion to array
+        if (is_string($class)) {
+            $class = [$class];
+        }
+        // Add use instruction
+        foreach ($class as $key => $value) {
+            // String key mean the user setted a use with an alias
+            if (is_string($key)) {
+                $this->addInstruction('use ' . $key . ' as ' . $value);
+            } else {
+                $this->addInstruction('use ' . $value);
             }
-        } else {
-            $this->addInstruction('use ' . $class);
         }
         return $this;
     }
